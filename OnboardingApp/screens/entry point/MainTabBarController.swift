@@ -4,29 +4,56 @@
 //
 //  Created by lilit on 15.06.25.
 //
-
 import UIKit
 
 
-class MainTabBarController: UITabBarController {
+// Shared UserManager Singleton
+class UserManager {
+    static let shared = UserManager()
+
+    var name: String = "Default"
+    var phone: String = ""
+    var notificationPreference: String = ""
+
+    private init() {}
+}
+
+class MainTabBarController: UITabBarController
+{
+
     override func viewDidLoad() {
         super.viewDidLoad()
+        setupTabs()
+        setupTabBarAppearance()
+    }
 
-        let onboarding = UINavigationController(rootViewController: OnboardingViewController())
-        onboarding.tabBarItem = UITabBarItem(title: "Onboarding", image: UIImage(systemName: "star"), selectedImage: UIImage(systemName: "star.fill"))
+    private func setupTabs() {
+        let onboardingVC = OnboardingViewController()
+        let onboardingNav = UINavigationController(rootViewController: onboardingVC)
+        onboardingNav.tabBarItem = UITabBarItem(title: "Onboarding", image: UIImage(systemName: "rectangle.stack.person.crop"), tag: 0)
 
-        let profile = UINavigationController(rootViewController: ProfileViewController())
-        profile.tabBarItem = UITabBarItem(title: "Profile", image: UIImage(systemName: "person"), selectedImage: UIImage(systemName: "person.fill"))
+        let profileVC = ProfileViewController()
+        let profileNav = UINavigationController(rootViewController: profileVC)
+        profileNav.tabBarItem = UITabBarItem(title: "Profile", image: UIImage(systemName: "person.circle"), tag: 1)
 
-        let settings = SettingsViewController()
-        settings.tabBarItem = UITabBarItem(title: "Settings", image: UIImage(systemName: "gear"), selectedImage: UIImage(systemName: "gear.fill"))
+        let settingsVC = SettingsViewController()
+        settingsVC.tabBarItem = UITabBarItem(title: "Settings", image: UIImage(systemName: "gear"), tag: 2)
 
-        viewControllers = [onboarding, profile, settings]
+        viewControllers = [onboardingNav, profileNav, settingsVC]
+    }
 
-        tabBar.barTintColor = .orange
-        tabBar.tintColor = .white
-        tabBar.unselectedItemTintColor = .gray
+    private func setupTabBarAppearance() {
+        let appearance = UITabBarAppearance()
+        appearance.configureWithOpaqueBackground()
+        appearance.backgroundColor = .orange
 
-        print("MainTabBarController loaded")
+        appearance.stackedLayoutAppearance.selected.iconColor = .white
+        appearance.stackedLayoutAppearance.selected.titleTextAttributes = [.foregroundColor: UIColor.white]
+
+        appearance.stackedLayoutAppearance.normal.iconColor = .gray
+        appearance.stackedLayoutAppearance.normal.titleTextAttributes = [.foregroundColor: UIColor.gray]
+
+        tabBar.standardAppearance = appearance
+        tabBar.scrollEdgeAppearance = appearance
     }
 }

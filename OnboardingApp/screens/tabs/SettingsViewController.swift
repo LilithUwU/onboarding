@@ -8,12 +8,10 @@
 import UIKit
 
 class SettingsViewController: UIViewController {
-
     private let toggle: UISwitch = {
-        let toggle = UISwitch()
-        toggle.translatesAutoresizingMaskIntoConstraints = false
-        toggle.isOn = true
-        return toggle
+        let sw = UISwitch()
+        sw.translatesAutoresizingMaskIntoConstraints = false
+        return sw
     }()
 
     private let label: UILabel = {
@@ -26,28 +24,15 @@ class SettingsViewController: UIViewController {
     override func viewDidLoad() {
         super.viewDidLoad()
         view.backgroundColor = .systemBackground
-
-        setupUI()
-        print(#function)
-    }
-
-    func setupUI() {
-        view.addSubview(label)
         view.addSubview(toggle)
+        view.addSubview(label)
 
         NSLayoutConstraint.activate([
-            label.centerXAnchor.constraint(equalTo: view.centerXAnchor),
-            label.centerYAnchor.constraint(equalTo: view.centerYAnchor),
-
             toggle.centerXAnchor.constraint(equalTo: view.centerXAnchor),
-            toggle.topAnchor.constraint(equalTo: label.bottomAnchor, constant: 20)
+            toggle.centerYAnchor.constraint(equalTo: view.centerYAnchor),
+
+            label.centerXAnchor.constraint(equalTo: view.centerXAnchor),
+            label.topAnchor.constraint(equalTo: toggle.bottomAnchor, constant: 20)
         ])
     }
-
-    override func viewWillAppear(_ animated: Bool) { super.viewWillAppear(animated); print(#function) }
-    override func viewDidAppear(_ animated: Bool) { super.viewDidAppear(animated); print(#function) }
-    override func viewWillLayoutSubviews() { super.viewWillLayoutSubviews(); print(#function) }
-    override func viewDidLayoutSubviews() { super.viewDidLayoutSubviews(); print(#function) }
-    override func viewWillDisappear(_ animated: Bool) { super.viewWillDisappear(animated); print(#function) }
-    override func viewDidDisappear(_ animated: Bool) { super.viewDidDisappear(animated); print(#function) }
 }

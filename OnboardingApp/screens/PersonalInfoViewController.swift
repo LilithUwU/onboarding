@@ -7,6 +7,7 @@
 
 import UIKit
 
+
 class PersonalInfoViewController: UIViewController {
 
     private let nameField: UITextField = {
@@ -91,6 +92,8 @@ class PersonalInfoViewController: UIViewController {
 
         alert.addAction(UIAlertAction(title: "Edit", style: .default, handler: nil))
         alert.addAction(UIAlertAction(title: "Confirm", style: .default, handler: { _ in
+            UserManager.shared.name = name
+            UserManager.shared.phone = phone
             let prefsVC = PreferencesViewController()
             self.navigationController?.pushViewController(prefsVC, animated: true)
         }))

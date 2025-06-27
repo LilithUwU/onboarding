@@ -6,12 +6,10 @@
 //
 import UIKit
 
+
 class OnboardingViewController: UIViewController {
-    func setRestartMode() {
-        startButton.setTitle("Restart", for: .normal)
-        startButton.backgroundColor = .systemGreen
-    }
-    let startButton: UIButton = { 
+
+    private let startButton: UIButton = {
         let button = UIButton(type: .system)
         button.setTitle("Start", for: .normal)
         button.backgroundColor = .systemBlue
@@ -21,18 +19,12 @@ class OnboardingViewController: UIViewController {
         return button
     }()
 
+    private var isRestarted = false
 
     override func viewDidLoad() {
         super.viewDidLoad()
-        view.backgroundColor = .systemYellow
-
-        setupLayout()
-        startButton.addTarget(self, action: #selector(startTapped), for: .touchUpInside)
-
-        print("OnboardingViewController loaded")
-    }
-
-    private func setupLayout() {
+        view.backgroundColor = .systemBackground
+        title = "Welcome"
         view.addSubview(startButton)
 
         NSLayoutConstraint.activate([
@@ -41,11 +33,18 @@ class OnboardingViewController: UIViewController {
             startButton.widthAnchor.constraint(equalToConstant: 200),
             startButton.heightAnchor.constraint(equalToConstant: 50)
         ])
+
+        startButton.addTarget(self, action: #selector(startTapped), for: .touchUpInside)
     }
 
     @objc private func startTapped() {
-        let personalInfoVC = PersonalInfoViewController()
-        navigationController?.pushViewController(personalInfoVC, animated: true)
+        let personalVC = PersonalInfoViewController()
+        navigationController?.pushViewController(personalVC, animated: true)
+    }
+
+    func setRestartMode() {
+        isRestarted = true
+        startButton.setTitle("Restart", for: .normal)
+        startButton.backgroundColor = .systemGreen
     }
 }
-
